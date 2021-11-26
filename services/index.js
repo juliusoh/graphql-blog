@@ -34,8 +34,42 @@ export const getPosts = async () => {
   `;
 
   const result = await request(graphqlAPI, query);
-  console.log('services', result);
+  console.log('getposts', result);
   return result.postsConnection.edges;
+};
+
+export const getPostDetails = async (slug) => {
+  const query = gql`
+    query GetPostDetails($slug : String!) {
+      post(where: {slug: $slug}) {
+        title
+        excerpt
+        featuredImage {
+          url
+        }
+        author{
+          name
+          bio
+          photo {
+            url
+          }
+        }
+        createdAt
+        slug
+        content {
+          raw
+        }
+        categories {
+          name
+          slug
+        }
+      }
+    }
+  `;
+
+  const result = await request(graphqlAPI, query, { slug });
+  console.log('postdetails', result);
+  return result.post;
 };
 
 // get recent posts
@@ -57,15 +91,17 @@ export const getRecentPosts = async () => {
     }
   `;
   const result = await request(graphqlAPI, query);
-  console.log('services', result);
+  console.log('recent posts', result);
   return result.posts;
 };
 
-export const getSimilarPosts = async () => {
+export const getSimilarPosts = async (categories, slug) => {
   const query = gql`
     query GetPostDetails($slug: String!, $categories: [String!]) {
-      posts(where: { slug_not: $slug, AND: { categries_some: { slug_in: $categories } } })
-      last: 3  ) {
+      posts(
+        where: {slug_not: $slug, AND: {categories_some: {slug_in: $categories}}}
+        last: 3
+      ) {
         title
         featuredImage {
           url
@@ -75,8 +111,8 @@ export const getSimilarPosts = async () => {
       }
     }
   `;
-  const result = await request(graphqlAPI, query);
-  console.log('services', result);
+  const result = await request(graphqlAPI, query, { slug, categories });
+  console.log('similar posts', result);
   return result.posts;
 };
 
@@ -88,12 +124,8 @@ export const getCategories = async () => {
         slug
       }
     }
-  `
+  `;
   const result = await request(graphqlAPI, query);
-  console.log('services', result);
+  console.log('getcategories', result);
   return result.categories;
-}
-
-
-
-
+};
