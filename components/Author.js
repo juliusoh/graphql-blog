@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Author = ({ author }) => {
   return (
     <div className="text-center mt-5 mb-8 p-4 flex flex-col justify-center items-center rounded-lg bg-black bg-opacity-20">
-      <div class="">
+      <div className="">
         {' '}
         <img
           height="100px"

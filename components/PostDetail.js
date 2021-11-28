@@ -4,7 +4,6 @@ import { CopyBlock } from 'react-code-blocks';
 
 const PostDetail = ({ post }) => {
   const getContentFragment = (index, text, obj, type) => {
-    console.log('obj', obj);
     let modifiedText = text;
     if (obj) {
       if (obj.bold) {
@@ -47,8 +46,8 @@ const PostDetail = ({ post }) => {
         );
       case 'code-block':
         return (
-          <div style={{ backgroundColor: '#f7f7f7' }} className="rounded-md p-3">
-            <code style={{ whiteSpace: 'pre-wrap', color: 'black' }} className="" key={index}>
+          <div key={index} style={{ backgroundColor: '#f7f7f7' }} className="rounded-md p-3">
+            <code style={{ whiteSpace: 'pre-wrap', color: 'black' }}>
               {modifiedText.map((item, i) => (
                 <React.Fragment key={i}>{item}</React.Fragment>
               ))}
@@ -73,8 +72,8 @@ const PostDetail = ({ post }) => {
           className="object-top h-full w-full rounded-t-lg"
         />
       </div>
-      <div class="px-4 lg:px-0">
-        <div class="flex items-center mb-8 w-full">
+      <div className="px-4 lg:px-0">
+        <div className="flex items-center mb-8 w-full">
           <div className="flex items-center mb-4 lg:mb-0 w-full lg:w-auto mr-8">
             <img
               alt={post.author.name}
@@ -104,8 +103,8 @@ const PostDetail = ({ post }) => {
             <span>{moment(post.createdAt).format('MMM DD, YYYY')}</span>
           </div>
         </div>
-        <h1 class="mb-8 text-3xl font-semibold">{post.title}</h1>
-        {console.log(post.content.raw.children)}
+        <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
+
         {post.content.raw.children.map((typeObj, index) => {
           const children = typeObj.children.map((item, itemIndex) =>
             getContentFragment(itemIndex, item.text, item)
