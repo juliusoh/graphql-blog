@@ -54,6 +54,16 @@ const PostDetail = ({ post }) => {
             </code>
           </div>
         );
+        case 'code':
+          return (
+            <div key={index} style={{ backgroundColor: '#f7f7f7' }} className="rounded-md p-3">
+              <code style={{ whiteSpace: 'pre-wrap', color: 'black' }}>
+                {modifiedText.map((item, i) => (
+                  <React.Fragment key={i}>{item}</React.Fragment>
+                ))}
+              </code>
+            </div>
+          );
       case 'image':
         return (
           <img key={index} alt={obj.title} height={obj.height} width={obj.width} src={obj.src} />
