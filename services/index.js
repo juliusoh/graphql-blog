@@ -7,6 +7,7 @@ export const getPosts = async () => {
     query MyQuery {
       postsConnection {
         edges {
+          cursor
           node {
             author {
               bio
@@ -34,7 +35,7 @@ export const getPosts = async () => {
   `;
 
   const result = await request(graphqlAPI, query);
-  console.log('getposts', result);
+
   return result.postsConnection.edges;
 };
 
